@@ -1,0 +1,22 @@
+<img src="" id="img">
+<video id="v"></video>
+<canvas id="c"></canvas>
+<script>
+    window.addEventListener('load', init);
+    function init (){
+        var video = document.querySelector('#v'), canvas = document.querySelector('#c'), img = document.querySelector('#img');
+
+        navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+
+        if(navigator.getUserMedia){
+            navigator.getUserMedia({video:true}, function(stream){
+                video.src = window.URL.createObjectURL(stream);
+                video.play();
+            }, function(e){console.log(e);})
+
+        }
+        else alert('tienes un navegador obsoleto');
+
+        video.addEventListener('loadedmetadata', function(){canvas.width = video.videoWidth; canvas.height = video.videoHeight;},false);
+    }
+</script>
